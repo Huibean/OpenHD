@@ -50,7 +50,8 @@ static constexpr auto QOPENHD_SYS_ID = 255;
 static constexpr auto OHD_SYS_ID_FC = 1;
 static constexpr auto OHD_SYS_ID_FC_BETAFLIGHT = 0;
 
-static constexpr auto OHD_GROUND_CLIENT_UDP_PORT_OUT = 14550;
+// Default port for ground client UDP output - can be overridden by configuration
+static constexpr auto OHD_GROUND_CLIENT_UDP_PORT_OUT_DEFAULT = 14550;
 static constexpr auto OHD_GROUND_CLIENT_UDP_PORT_IN = 14551;
 
 struct MavlinkMessage {

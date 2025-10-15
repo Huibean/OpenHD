@@ -33,6 +33,7 @@
 #include "../src/OHDTelemetry.h"
 #include "openhd_platform.h"
 #include "openhd_profile.h"
+#include "openhd_config.h"
 #include "openhd_spdlog_include.h"
 
 int main() {
@@ -41,7 +42,8 @@ int main() {
   {
     OHDProfile profile{true, "YY"};
     const auto platform = OHDPlatform::instance();
-    air = std::make_unique<OHDTelemetry>(profile, true);
+    auto config = openhd::load_config();
+    air = std::make_unique<OHDTelemetry>(profile, config, true);
   }
   static bool quit = false;
   signal(SIGTERM, [](int sig) { quit = true; });

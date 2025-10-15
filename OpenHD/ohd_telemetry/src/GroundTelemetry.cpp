@@ -31,14 +31,14 @@
 #include "openhd_util.h"
 #include "openhd_util_time.h"
 
-GroundTelemetry::GroundTelemetry() : MavlinkSystem(OHD_SYS_ID_GROUND) {
+GroundTelemetry::GroundTelemetry(int telemetry_port) : MavlinkSystem(OHD_SYS_ID_GROUND) {
   m_console = openhd::log::create_or_get("ground_tele");
   assert(m_console);
   m_gnd_settings =
       std::make_unique<openhd::telemetry::ground::SettingsHolder>();
   m_endpoint_tracker = std::make_unique<SerialEndpointManager>();
   m_gcs_endpoint = std::make_unique<UDPEndpoint>(
-      "GroundStationUDP", OHD_GROUND_CLIENT_UDP_PORT_OUT,
+      "GroundStationUDP", telemetry_port,
       OHD_GROUND_CLIENT_UDP_PORT_IN,
       // We send data to localhost::14550 and any other external device IPs
       "127.0.0.1",

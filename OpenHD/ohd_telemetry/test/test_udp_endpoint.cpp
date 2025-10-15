@@ -41,7 +41,7 @@
 
 int main() {
   std::cout << "UdpEndpointTest::start" << std::endl;
-  UDPEndpoint udpEndpoint("UdpEndpoint", OHD_GROUND_CLIENT_UDP_PORT_OUT,
+  UDPEndpoint udpEndpoint("UdpEndpoint", OHD_GROUND_CLIENT_UDP_PORT_OUT_DEFAULT,
                           OHD_GROUND_CLIENT_UDP_PORT_IN);
   auto cb = [](const std::vector<MavlinkMessage> messages) {
     for (const auto& msg : messages) {

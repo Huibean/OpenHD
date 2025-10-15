@@ -27,6 +27,10 @@
 #include <string>
 #include <vector>
 
+
+#define NW_FORWARDING_VIDEO_PORT_DEFAULT 5600
+#define NW_FORWARDING_TELEMETRY_PORT_DEFAULT 14550
+
 namespace openhd {
 
 static constexpr auto RPI_ETHERNET_ONLY = "RPI_ETHERNET_ONLY";
@@ -48,6 +52,8 @@ struct Config {
   std::string NW_ETHERNET_CARD = RPI_ETHERNET_ONLY;
   std::vector<std::string> NW_MANUAL_FORWARDING_IPS;
   bool NW_FORWARD_TO_LOCALHOST_58XX = false;
+  int NW_FORWARDING_VIDEO_PORT = NW_FORWARDING_VIDEO_PORT_DEFAULT;
+  int NW_FORWARDING_TELEMETRY_PORT = NW_FORWARDING_TELEMETRY_PORT_DEFAULT;
 
   // ETHERNET LINK
   std::string GROUND_UNIT_IP = "";

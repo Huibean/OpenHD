@@ -34,11 +34,16 @@ OHDVideoGround::OHDVideoGround(std::shared_ptr<OHDLink> link_handle)
   m_primary_video_forwarder = std::make_unique<openhd::UDPMultiForwarder>();
   m_secondary_video_forwarder = std::make_unique<openhd::UDPMultiForwarder>();
   m_audio_forwarder = std::make_unique<openhd::UDPMultiForwarder>();
-  // We always forward video to localhost::5600 (primary) and 5601 (secondary)
-  // for the default Ground control application (e.g. QOpenHD) to pick up
+ 
+  // Load configuration to get the video forwarding port
+  auto config = openhd::load_config();
+  m_video_port_primary = config.NW_FORWARDING_VIDEO_PORT;
+  m_video_port_secondary = config.NW_FORWARDING_VIDEO_PORT + 1;
+ 
+  // We always forward video to localhost for the default Ground control application (e.g. QOpenHD) to pick up
   addForwarder("127.0.0.1");
   // See the description in the .config file for more info
-  if (openhd::load_config().NW_FORWARD_TO_LOCALHOST_58XX || true) {
+  if (config.NW_FORWARD_TO_LOCALHOST_58XX || true) {
     m_console->debug("Forwarding video to 5800/5801 localhost is enabled");
     // Adding forwarder for WebRTC
     m_primary_video_forwarder->addForwarder("127.0.0.1", 5800);
@@ -74,14 +79,14 @@ OHDVideoGround::~OHDVideoGround() {
 }
 
 void OHDVideoGround::addForwarder(const std::string& client_addr) {
-  m_primary_video_forwarder->addForwarder(client_addr, 5600);
-  m_secondary_video_forwarder->addForwarder(client_addr, 5601);
+  m_primary_video_forwarder->addForwarder(client_addr, m_video_port_primary);
+  m_secondary_video_forwarder->addForwarder(client_addr, m_video_port_secondary);
   m_audio_forwarder->addForwarder(client_addr, 5610);
 }
 
 void OHDVideoGround::removeForwarder(const std::string& client_addr) {
-  m_primary_video_forwarder->removeForwarder(client_addr, 5600);
-  m_secondary_video_forwarder->removeForwarder(client_addr, 5601);
+  m_primary_video_forwarder->removeForwarder(client_addr, m_video_port_primary);
+  m_secondary_video_forwarder->removeForwarder(client_addr, m_video_port_secondary);
 }
 
 void OHDVideoGround::on_video_data(int stream_index, const uint8_t* data,

@@ -26,7 +26,7 @@
 #include "AirTelemetry.h"
 #include "GroundTelemetry.h"
 
-OHDTelemetry::OHDTelemetry(OHDProfile profile1, bool enableExtendedLogging)
+OHDTelemetry::OHDTelemetry(OHDProfile profile1, const openhd::Config& config, bool enableExtendedLogging)
     : m_profile(std::move(profile1)),
       m_enableExtendedLogging(enableExtendedLogging) {
   if (this->m_profile.is_air) {
@@ -38,7 +38,7 @@ OHDTelemetry::OHDTelemetry(OHDProfile profile1, bool enableExtendedLogging)
                                      this->m_enableExtendedLogging);
     });
   } else {
-    m_ground_telemetry = std::make_unique<GroundTelemetry>();
+    m_ground_telemetry = std::make_unique<GroundTelemetry>(config.NW_FORWARDING_TELEMETRY_PORT);
     assert(m_ground_telemetry);
     m_loop_thread = std::make_unique<std::thread>([this] {
       assert(m_ground_telemetry);

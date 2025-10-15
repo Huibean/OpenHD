@@ -52,6 +52,16 @@ static openhd::Config load_or_default() {
       }
     }
     inih::INIReader r{CONFIG_FILE_PATH};
+
+    ret.NW_FORWARDING_VIDEO_PORT =
+        r.Get<int>("network", "NW_FORWARDING_VIDEO_PORT", NW_FORWARDING_VIDEO_PORT_DEFAULT);
+    std::cout << "DEBUG: NW_FORWARDING_VIDEO_PORT: " << ret.NW_FORWARDING_VIDEO_PORT
+            << std::endl;
+    ret.NW_FORWARDING_TELEMETRY_PORT =
+        r.Get<int>("network", "NW_FORWARDING_TELEMETRY_PORT", NW_FORWARDING_TELEMETRY_PORT_DEFAULT);
+    std::cout << "DEBUG: NW_FORWARDING_TELEMETRY_PORT: " << ret.NW_FORWARDING_TELEMETRY_PORT
+            << std::endl;
+
     if (OHDFilesystemUtil::exists("/usr/local/share/openhd/debug.txt")) {
       // Parse WiFi configuration
       ret.WIFI_ENABLE_AUTODETECT =

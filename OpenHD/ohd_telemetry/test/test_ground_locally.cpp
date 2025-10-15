@@ -35,6 +35,7 @@
 #include "openhd_profile.h"
 #include "openhd_settings_imp.h"
 #include "openhd_spdlog_include.h"
+#include "openhd_config.h"
 
 int main() {
   std::cout << "start\n";
@@ -43,7 +44,8 @@ int main() {
   {
     OHDProfile profile{false, "XX"};
     const auto platform = OHDPlatform::instance();
-    ground = std::make_unique<OHDTelemetry>(profile);
+    auto config = openhd::load_config();
+    ground = std::make_unique<OHDTelemetry>(profile, config);
     // MAV_COMP_ID_ONBOARD_COMPUTER2=192
     ground->add_settings_generic(
         openhd::testing::create_dummy_ground_settings());

@@ -290,7 +290,8 @@ int main(int argc, char *argv[]) {
     // We start ohd_telemetry as early as possible, since even without a link
     // (transmission) it still picks up local log message(s) and forwards them
     // to any ground station clients (e.g. QOpenHD)
-    auto ohdTelemetry = std::make_shared<OHDTelemetry>(profile);
+    auto config = openhd::load_config();
+    auto ohdTelemetry = std::make_shared<OHDTelemetry>(profile, config);
 
     // Then start ohdInterface, which discovers detected wifi cards and more.
     auto ohdInterface = std::make_shared<OHDInterface>( profile);

@@ -47,7 +47,7 @@
  */
 class GroundTelemetry : public MavlinkSystem {
  public:
-  explicit GroundTelemetry();
+  explicit GroundTelemetry(int telemetry_port = 14550);
   GroundTelemetry(const GroundTelemetry&) = delete;
   GroundTelemetry(const GroundTelemetry&&) = delete;
   ~GroundTelemetry();

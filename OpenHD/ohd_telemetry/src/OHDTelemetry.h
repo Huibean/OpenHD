@@ -35,6 +35,7 @@
 #include "openhd_platform.h"
 #include "openhd_profile.h"
 #include "openhd_settings_imp.h"
+#include "openhd_config.h"
 
 // Forward declare them to speed up compilation time.
 class AirTelemetry;
@@ -45,7 +46,7 @@ class GroundTelemetry;
  */
 class OHDTelemetry {
  public:
-  OHDTelemetry(OHDProfile profile1, bool enableExtendedLogging = false);
+  OHDTelemetry(OHDProfile profile1, const openhd::Config& config, bool enableExtendedLogging = false);
   OHDTelemetry(const OHDTelemetry&) = delete;
   OHDTelemetry(const OHDTelemetry&&) = delete;
   ~OHDTelemetry();

@@ -56,6 +56,9 @@ class OHDVideoGround {
   std::unique_ptr<openhd::UDPMultiForwarder> m_primary_video_forwarder;
   std::unique_ptr<openhd::UDPMultiForwarder> m_secondary_video_forwarder;
   std::unique_ptr<openhd::UDPMultiForwarder> m_audio_forwarder;
+  // Configurable video forwarding ports
+  int m_video_port_primary = 5600;
+  int m_video_port_secondary = 5601;
   /**
    * Forward video to all device(s) consuming video.
    * Called by the ohd link handle (aka only wb right now)
